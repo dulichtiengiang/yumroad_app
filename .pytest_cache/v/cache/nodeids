@@ -1,0 +1,7 @@
+[
+  "tests/test_product.py::test_detail_page",
+  "tests/test_product.py::test_index_page",
+  "tests/test_product.py::test_name_validation",
+  "tests/test_product.py::test_not_found_page",
+  "tests/test_product.py::test_product_creation"
+]
