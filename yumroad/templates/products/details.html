@@ -1,0 +1,12 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<hr>
+<span>{{product.description}}</span>
+<hr>
+<button class="btn btn-success">Purchase coming soon</button>
+{% endblock content %}
+

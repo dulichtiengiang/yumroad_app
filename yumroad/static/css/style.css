@@ -1,0 +1,7 @@
+:root {
+    --main-color: #ffcc80;
+}
+
+.yumroad-main-color {
+    background-color: var(--main-color) !important;
+}
