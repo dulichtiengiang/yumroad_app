@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request, redirect, url_for
+from yumroad.extensions import db
 
 from yumroad.models import Product
 
@@ -15,6 +16,15 @@ def index():
 def details(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('/products/details.html', product=product)
+
+@products.route('/create', methods=['GET', 'POST'])
+def create():
+    if request.method == 'POST':
+        product = Product(name=request.form['name'], description=request.form['description'])
+        db.session.add(product)
+        db.session.commit()
+        return redirect(url_for('products.details', product_id=product.id))
+    return render_template('/products/create.html')
 
 @products.errorhandler(404)
 def not_found(exception):
