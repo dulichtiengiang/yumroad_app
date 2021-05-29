@@ -6,6 +6,7 @@ class BaseConfig:
 
 class DevConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
+    WTF_CSRF_ENABLED = False
     SQLALCHEMY_ECHO = True
 
 class ProdConfig(BaseConfig):
@@ -13,6 +14,7 @@ class ProdConfig(BaseConfig):
 
 class TestConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+    WTF_CSRF_ENABLED = False
 
 
 configuration = {
