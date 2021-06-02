@@ -4,9 +4,11 @@
 
 {% block content %}
 <h1>{{ product.name }}</h1>
+        
 <hr>
 <span>{{product.description}}</span>
 <hr>
 <button class="btn btn-success">Purchase coming soon</button>
+<a href="{{ url_for('products.edit', product_id=product.id) }}" class="btn btn-success">Edit</a>
 {% endblock content %}
 

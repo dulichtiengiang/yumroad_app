@@ -1,0 +1,12 @@
+{% extends 'base_layout.html' %}
+{% from '_formhelpers.html' import render_field %}
+{% block title %}Yumroad | Edit{{ product.name }}{% endblock title %}
+
+{% block content %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.description) }}
+        <button type="submit" class="btn btn-success">Finish Product</button>
+    </form>
+{% endblock content %}

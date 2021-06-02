@@ -1,0 +1,12 @@
+{% extends 'base_layout.html' %}
+{% from '_formhelpers.html' import render_field %}
+{% block title %}Yumroad | Login{% endblock title %}
+
+{% block content %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.password) }}
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+{% endblock content %}

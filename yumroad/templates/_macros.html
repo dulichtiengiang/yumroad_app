@@ -1,0 +1,12 @@
+{% macro render_flashes() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-4">
+                {% for category, message in messagesa %}
+                    <button type="button" class="close" data-dimiss="alert" aria-label="Close"></button>
+                    {{message}}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
