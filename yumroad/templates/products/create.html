@@ -4,7 +4,8 @@
 
 {% block content %}
     <form method="POST">
-        {{ form.crsf_token }}
+        {{ form.csrf_token }}
+
         {{ render_field(form.name) }}
         {{ render_field(form.description) }}
         <button type="submit" class="btn btn-success">Create Product</button>

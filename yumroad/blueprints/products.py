@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, abort, request, redirect, url_for
+from flask import Blueprint, render_template, abort, request, redirect, url_for, session
+from flask_login.utils import login_required
 
 from yumroad.extensions import db
 from yumroad.models import Product
@@ -8,6 +9,7 @@ bp_products = Blueprint('products', __name__)
 
 @bp_products.route('/')
 def index():
+    print(session)
     # all_products = Product.query.all()
     # return all_products
     product_all = Product.query.all()
@@ -19,6 +21,7 @@ def details(product_id):
     return render_template('/products/details.html', product=product)
 
 @bp_products.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     form = ProductForm()
     if form.validate_on_submit(): #Kiem tra hop le submit //Post
@@ -29,6 +32,7 @@ def create():
     return render_template('/products/create.html', form=form)
 
 @bp_products.route('/<int:product_id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit(product_id): 
     product = Product.query.get_or_404(product_id)
     form = ProductForm(obj=product)

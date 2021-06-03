@@ -43,6 +43,7 @@ class LoginForm(FlaskForm):
         
         user = User.query.filter_by(email=self.email.data).first()
         if not user and not check_password_hash(user.password, self.password.data):
+            #mat khau khong hop le, email khong ton tai
             self.email.errors.append('Email va mat khau khong hop le')
             return False
         return True
