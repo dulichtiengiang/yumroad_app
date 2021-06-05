@@ -1,4 +1,9 @@
-from flask_wtf import FlaskForm
+
+import flask_wtf
+import wtforms
+
+
+from flask_wtf.form import FlaskForm
 from werkzeug.security import check_password_hash
 from wtforms.fields import StringField, SubmitField, PasswordField
 from wtforms.validators import Length, email, required, EqualTo

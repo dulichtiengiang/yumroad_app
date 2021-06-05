@@ -1,5 +1,10 @@
 {
-  "tests/test_product.py::test_detail_page": true,
-  "tests/test_product.py::test_index_page": true,
-  "tests/test_product.py::test_not_found_page": true
+  "tests/test_product.py::test_create_page": true,
+  "tests/test_product.py::test_new_page": true,
+  "tests/test_product.py::test_new_product_create_page": true,
+  "tests/test_product.py::test_product__edit_page__invalid_submission": true,
+  "tests/test_product.py::test_product_edit_page": true,
+  "tests/test_product.py::test_product_edit_page_submission": true,
+  "tests/test_product.py::test_product_invalid_creation": true,
+  "tests/test_product.py::test_product_valid_creation": true
 }

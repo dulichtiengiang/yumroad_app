@@ -5,7 +5,6 @@
 {% block content %}
     <form method="POST">
         {{ form.csrf_token }}
-
         {{ render_field(form.email) }}
         {{ render_field(form.password) }}
         {{ render_field(form.confirm_password) }}

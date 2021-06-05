@@ -1,7 +1,15 @@
 [
+  "tests/test_product.py::test_create_page",
   "tests/test_product.py::test_detail_page",
   "tests/test_product.py::test_index_page",
   "tests/test_product.py::test_name_validation",
+  "tests/test_product.py::test_new_page",
+  "tests/test_product.py::test_new_product_create_page",
   "tests/test_product.py::test_not_found_page",
-  "tests/test_product.py::test_product_creation"
+  "tests/test_product.py::test_product__edit_page__invalid_submission",
+  "tests/test_product.py::test_product_creation",
+  "tests/test_product.py::test_product_edit_page",
+  "tests/test_product.py::test_product_edit_page_submission",
+  "tests/test_product.py::test_product_invalid_creation",
+  "tests/test_product.py::test_product_valid_creation"
 ]
