@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, abort, request, redirect, url_for, session
+from flask import Blueprint, render_template, abort, redirect, url_for, request, session
 from flask_login.utils import login_required
+from werkzeug.wrappers import response
 
 from yumroad.extensions import db
 from yumroad.models import Product
@@ -24,10 +25,13 @@ def details(product_id):
 @login_required
 def create():
     form = ProductForm()
-    if form.validate_on_submit(): #Kiem tra hop le submit //Post
+    
+    if form.validate_on_submit(): #/Validate = Post
         product = Product(name=form.name.data, description=form.description.data)
         db.session.add(product)
         db.session.commit()
+        
+        print(request.__dict__)
         return redirect(url_for('products.details', product_id=product.id))
     return render_template('/products/create.html', form=form)
 

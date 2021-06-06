@@ -1,5 +1,11 @@
 [
+  "tests/test_product.py::test__create_product__invalid",
+  "tests/test_product.py::test__create_product__valid",
+  "tests/test_product.py::test__edit_product",
+  "tests/test_product.py::test__new_product",
+  "tests/test_product.py::test__new_product__unauth",
   "tests/test_product.py::test_create_page",
+  "tests/test_product.py::test_creation",
   "tests/test_product.py::test_detail_page",
   "tests/test_product.py::test_index_page",
   "tests/test_product.py::test_name_validation",
@@ -11,5 +17,9 @@
   "tests/test_product.py::test_product_edit_page",
   "tests/test_product.py::test_product_edit_page_submission",
   "tests/test_product.py::test_product_invalid_creation",
-  "tests/test_product.py::test_product_valid_creation"
+  "tests/test_product.py::test_product_valid_creation",
+  "tests/test_user.py::test_get_register",
+  "tests/test_user.py::test_register",
+  "tests/test_user.py::test_register_invalid",
+  "tests/test_user.py::test_user_creation"
 ]

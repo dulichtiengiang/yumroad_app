@@ -14,7 +14,7 @@ class Product(db.Model):
     @validates('name')
     def validate_name(self, key, name):
         if len(name.strip()) <= 3:
-            raise ValueError("Need to have a real name")
+            raise ValueError("Vui lòng nhập tên thật")
         return name
 
 class User(UserMixin, db.Model):

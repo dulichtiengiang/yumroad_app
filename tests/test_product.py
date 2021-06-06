@@ -1,9 +1,10 @@
-import re
 import pytest
 from flask import url_for
 from yumroad.extensions import db
 from yumroad.models import Product
 
+TEST_NAME = "test_name"
+TEST_DESC = "test_desc"
 
 @pytest.fixture
 def sample_book():
@@ -12,7 +13,7 @@ def sample_book():
     db.session.commit()
     return book
 
-def test_product_creation(client, init_database):
+def test_product_creation(client, init_database, authenticated_request):
     assert Product.query.count() == 0
     book = Product(name="Book of Dev", description="Learning for Dev")
     db.session.add(book)
@@ -47,37 +48,46 @@ def test_not_found_page(client, init_database):
     assert response.status_code == 404
     assert url_for('products.index') in str(response.data)
 
-def test_new_page(client, init_database): #TEST VAO TRANG CREATE.HTML
-    response = client.get(url_for('products.create')) #Lay toan bo du lieu response trong trang create.html
+def test__new_product(client, init_database, authenticated_request):
+    response = client.get(url_for('products.create'))
     assert response.status_code == 200
-    assert b'Name' in response.data # ??? Ton tai b Name trong trang khong
-    assert b'Create' in response.data # ??? Ton tai button 'Create' trong trang khong
+    assert b'Name' in response.data
+    assert b'Create' in response.data
 
-def test_product_valid_creation(client, init_database): #TEST TAO SAN PHAM TRONG CREATE.HTML
-    response = client.get(url_for('products.create'),#Lay toan bo response trong create.html truyen ve Client
-                            data=dict(name='test name product', description='test valid'), #nhap Name va description
+#Test Login fail
+def test__new_product__unauth(client, init_database): 
+    response = client.get(url_for('products.create'))
+    assert response.status_code == 302 #Khong co tai khoan dang nhap, nó sẽ redirect response.status_code = 302
+    assert response.location == url_for('user.login', _external=True) #Chuyển hướng redirects 
+
+def test__create_product__valid(client, init_database, authenticated_request): #TEST TAO SAN PHAM TRONG CREATE.HTML
+    response = client.post(url_for('products.create'),
+                            data={'name': 'test_name', 'description':'test_desc'}, #nhap Name va description
+                            follow_redirects=True) #Cho phep return redirect(url_for(products.details))
+    assert response.status_code == 200 #
+    assert b'Create Product' in response.data #
+    assert b'test_name' in response.data #
+    assert b'test_desc' in response.data #
+
+
+def test__create_product__invalid(client, init_database, authenticated_request):
+    response = client.post(url_for('products.create'),#Lay toan bo response trong create.html truyen ve Client
+                            data=dict(name='ab', description='is not valid'), #nhap Name va description
                             follow_redirects=True) #Cho phep return redirect(url_for(products.details))
     assert response.status_code == 200 # ??? 
-    assert b'test name product' in response.data # ???
-    assert b'test valid' in response.data # ???
+    assert b'Field must be between 3 and 60 characters long' in response.data #
+    assert b'is not valid' in response.data # description
+    assert b'is-invalid' in response.data # class="is-invalid" in This response
 
-def test_product_invalid_creation(client, init_database):
-    response = client.get(url_for('products.create'),#Lay toan bo response trong create.html truyen ve Client
-                            data=dict(name='a', description='test invalid'), #nhap Name va description
-                            follow_redirects=True) #Cho phep return redirect(url_for(products.details))
-    assert response.status_code == 200 # ??? 
-    assert b'Field must be between 3 and 60 characters long' in response.data # ???
-    assert b'is not valid' in response.data # ???
-    assert b'is-invalid' in response.data # ???
-
-def test_product_edit_page(client, init_database):
+#Test just get URL
+def test__edit_product(client, init_database, sample_book, authenticated_request):
     response = client.get(url_for('products.edit', product_id=sample_book.id))
-    assert response.state_code == 200
+    assert response.status_code == 200
     assert b'Finish Product' in response.data
-    assert sample_book.name in response.data
-    assert sample_book.description in response.data
+    assert sample_book.name in str(response.data)
+    assert sample_book.description in str(response.data)
 
-def test_product_edit_page_submission(client, init_database):
+def test__edit_product__submission__valid(client, init_database, sample_book, authenticated_request):
     old_name = sample_book.name
     old_description = sample_book.description
     response = client.post(url_for('products.edit', product_id=sample_book.id),

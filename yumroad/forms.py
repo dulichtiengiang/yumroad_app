@@ -31,7 +31,7 @@ class SignupForm(FlaskForm):
         #fisrt nếu có return True
         if user: #(True -> Neu da co email - Email da ton tai)
             #append error on to the email form
-            self.email.errors.append('Email da co nguoi su dung')
+            self.email.errors.append('_myerror_That email already has an account')
             return False
         return True
 
@@ -49,7 +49,7 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(email=self.email.data).first()
         if not user and not check_password_hash(user.password, self.password.data):
             #mat khau khong hop le, email khong ton tai
-            self.email.errors.append('Email va mat khau khong hop le')
+            self.email.errors.append('_myerror_Invalid email or password')
             return False
         return True
     

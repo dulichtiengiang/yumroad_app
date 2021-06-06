@@ -45,9 +45,10 @@ def login():
     if form.validate_on_submit():
         #When login user that not create
         user = User.query.filter_by(email=form.email.data).one() #one = gap la dung tim
-        login_user(user=user)
+        if user:
+            login_user(user=user)
         #flash = Show messages
-        flash('Đăng nhập thành công', 'success')
+        flash('Registered Successfully', 'success')
         #we need to tell flask_login How to know that a Cookie belongs to a specific user (User cu the)
         #Neu login xong thi quay lai vi tri url truoc hoac ve index
         return redirect(session.get('after_login') or url_for('products.index'))
