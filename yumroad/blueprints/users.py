@@ -15,7 +15,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    flash('Vui lòng đăng nhập Foxv ID', 'warning')
+    flash('__You need to login', 'warning')
     session['after_login'] = request.url #Flash into url => session co flash, du cho flash nam tren hay nam duoi session['after]
     print(session)
     return redirect( url_for('user.login') )
@@ -30,7 +30,7 @@ def register():
         db.session.commit()
         #Dang nhap san
         login_user(user)
-        flash('Đã đăng ký thành công', 'success')
+        flash('__flash__Registered successfully', 'success')
         #we need to tell flask_login How to know that a Cookie belongs to a specific user (User cu the) 
         return redirect(url_for('products.index'))
     return render_template('/users/register.html', form=form)
@@ -40,7 +40,7 @@ def login():
     form = LoginForm()
     #if current User is login
     if current_user.is_authenticated:
-        flash("Tài khoản đang được đăng nhập", "warning")
+        flash("__flash__You are already logged in", "warning")
         return redirect(url_for('products.index'))
     if form.validate_on_submit():
         #When login user that not create
@@ -48,7 +48,7 @@ def login():
         if user:
             login_user(user=user)
         #flash = Show messages
-        flash('Registered Successfully', 'success')
+        flash('__flash__Logged in successfully', 'success')
         #we need to tell flask_login How to know that a Cookie belongs to a specific user (User cu the)
         #Neu login xong thi quay lai vi tri url truoc hoac ve index
         return redirect(session.get('after_login') or url_for('products.index'))
@@ -58,3 +58,4 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('products.index'))
+

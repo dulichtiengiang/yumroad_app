@@ -1,7 +1,9 @@
 {
   "tests/test_product.py::test__edit_product__submission__invalid": true,
+  "tests/test_product.py::test__product_edit__submission__invalid": true,
   "tests/test_product.py::test_create_page": true,
   "tests/test_product.py::test_creation": true,
+  "tests/test_product.py::test_name_validation": true,
   "tests/test_product.py::test_new_page": true,
   "tests/test_product.py::test_new_product_create_page": true,
   "tests/test_product.py::test_product__edit_page__invalid_submission": true,
