@@ -2,6 +2,8 @@
   "tests/test_product.py::test__create_product__invalid",
   "tests/test_product.py::test__create_product__valid",
   "tests/test_product.py::test__edit_product",
+  "tests/test_product.py::test__edit_product__submission__invalid",
+  "tests/test_product.py::test__edit_product__submission__valid",
   "tests/test_product.py::test__new_product",
   "tests/test_product.py::test__new_product__unauth",
   "tests/test_product.py::test_create_page",

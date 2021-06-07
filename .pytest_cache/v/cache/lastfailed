@@ -1,4 +1,5 @@
 {
+  "tests/test_product.py::test__edit_product__submission__invalid": true,
   "tests/test_product.py::test_create_page": true,
   "tests/test_product.py::test_creation": true,
   "tests/test_product.py::test_new_page": true,

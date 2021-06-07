@@ -62,7 +62,7 @@ def test__new_product__unauth(client, init_database):
 
 def test__create_product__valid(client, init_database, authenticated_request): #TEST TAO SAN PHAM TRONG CREATE.HTML
     response = client.post(url_for('products.create'),
-                            data={'name': 'test_name', 'description':'test_desc'}, #nhap Name va description
+                            data=dict(name='test_name', description='test_desc'), #nhap Name va description
                             follow_redirects=True) #Cho phep return redirect(url_for(products.details))
     assert response.status_code == 200 #
     assert b'Create Product' in response.data #
@@ -91,23 +91,24 @@ def test__edit_product__submission__valid(client, init_database, sample_book, au
     old_name = sample_book.name
     old_description = sample_book.description
     response = client.post(url_for('products.edit', product_id=sample_book.id),
-                                    data=dict(name='test-changed', description='is persisted'),
+                                    data=dict(name='test-changed', description='test-desc'),
                                     follow_redirects=True)
     assert response.status_code == 200
-    assert 'tett-changed' in response.data
-    assert 'is persisted' in response.data
-    assert old_name not in response.data
-    assert old_description not in response.data
+    assert 'test-changed' in str(response.data)
+    assert b'test-changed' in response.data
+    assert b'test-desc' in response.data
+    assert old_name not in str(response.data)
+    assert old_description not in str(response.data)
     assert b'Finish Product' not in response.data
 
-def test_product__edit_page__invalid_submission(client, init_database):
+def test__edit_product__submission__invalid(client, init_database, sample_book, authenticated_request):
     old_name = sample_book.name
     old_description = sample_book.description
-    response = client.post(url_for('vi0', product_id=sample_book.id),
-                                    data=dict(name='test-changed', description='is persisted'),
+    response = client.post(url_for('products.edit', product_id=sample_book.id),
+                                    data=dict(name='br0', description='is persisted'),
                                     follow_redirects=True)
     assert response.status_code == 200
-    assert 'vi0' in response.data
+    assert 'br0' in response.data
     assert 'Field must be between 3 and 60 characters long' in response.data
     assert Product.query.get(sample_book.id).name == old_name
     assert old_description not in str(response.data)

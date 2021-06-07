@@ -28,7 +28,7 @@ def register():
         user = User.create(form.email.data, form.password.data)
         db.session.add(user)
         db.session.commit()
-         #Dang nhap san
+        #Dang nhap san
         login_user(user)
         flash('Đã đăng ký thành công', 'success')
         #we need to tell flask_login How to know that a Cookie belongs to a specific user (User cu the) 

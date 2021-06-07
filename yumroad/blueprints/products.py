@@ -10,7 +10,8 @@ bp_products = Blueprint('products', __name__)
 
 @bp_products.route('/')
 def index():
-    print(session)
+
+    # print(session)
     # all_products = Product.query.all()
     # return all_products
     product_all = Product.query.all()
@@ -25,13 +26,10 @@ def details(product_id):
 @login_required
 def create():
     form = ProductForm()
-    
     if form.validate_on_submit(): #/Validate = Post
         product = Product(name=form.name.data, description=form.description.data)
         db.session.add(product)
         db.session.commit()
-        
-        print(request.__dict__)
         return redirect(url_for('products.details', product_id=product.id))
     return render_template('/products/create.html', form=form)
 
