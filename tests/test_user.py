@@ -63,3 +63,4 @@ def test__register__with_existing_user(client, init_database):
     assert b'__form_validate__That email already has an account' in response.data
     assert b'__flash__Registered successfully' not in response.data
     assert b'__flash__You are already logged in' not in response.data
+\

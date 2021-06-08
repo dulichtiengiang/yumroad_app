@@ -22,6 +22,9 @@ def unauthorized():
 
 @bp_user.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        flash("__flash__You are already logged in", "warning")
+        return redirect(url_for('products.index'))
     form = SignupForm()
     if form.validate_on_submit():
         #create a user
