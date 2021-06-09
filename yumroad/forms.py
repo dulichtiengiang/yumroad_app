@@ -38,22 +38,21 @@ class SignupForm(FlaskForm):
     #         return False
     #     return True
 
-
 class LoginForm(FlaskForm):
-    email = StringField('Email:', [validators.DataRequired(), validators.email(), validators.InputRequired()])
-    password = PasswordField('Password:', [validators.DataRequired(), validators.InputRequired()])
+    email = StringField('Email:', [validators.DataRequired(), validators.email()])
+    password = PasswordField('Password:', [validators.DataRequired()])
     
-    def validate(self):
+    def validate_email(self, email):
+
         #??? check_validate = super(SignupForm, self).validate()
         # check_validate = super(LoginForm, self).validate()
-        #the default method is define in Platform for Validate login
+        # # #the default method is define in Platform for Validate login
         # if not check_validate:
         #     return False
         
+    # def validate_email(self, email):
         user = User.query.filter_by(email=self.email.data).first()
-        #mat khau khong hop le, email khong ton tai
-        if not user and not check_password_hash(user.password, self.password.data):
-            # self.email.errors.append('_myerror_Invalid email or password')
-            raise ValidationError('__form_validate__Invalid email or password')
-            # return False
+        if not user or not check_password_hash(user.password, self.password.data):
+            self.email.errors.append('__self.email.errors.append__form_validate__Invalid email or password')
+            return False
         return True

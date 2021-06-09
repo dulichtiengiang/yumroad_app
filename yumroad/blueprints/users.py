@@ -46,11 +46,9 @@ def login():
         flash("__flash__You are already logged in", "warning")
         return redirect(url_for('products.index'))
     if form.validate_on_submit():
-        #When login user that not create
         user = User.query.filter_by(email=form.email.data).one() #one = gap la dung tim
         if user:
             login_user(user=user)
-        #flash = Show messages
         flash('__flash__Logged in successfully', 'success')
         #we need to tell flask_login How to know that a Cookie belongs to a specific user (User cu the)
         #Neu login xong thi quay lai vi tri url truoc hoac ve index
@@ -61,4 +59,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('products.index'))
-

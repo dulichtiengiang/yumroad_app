@@ -15,17 +15,11 @@ def init_database():
     yield
     db.drop_all()
 
-#! Tao mot tai khoan test
+#! Tao mot tai khoan va dang nhap -> follow_redirects=True
 @pytest.fixture
 def authenticated_request(client):
-    new_user = User.create("test@test.com", "testpass")
+    new_user = User.create('test@valid.com', 'testvalid')
     db.session.add(new_user)
     db.session.commit()
-
-    response = client.post(url_for('user.login'),
-                            data={'email':"test@test.com",
-                                    'password':"testpass"},
-                            follow_redirects=True
-    )
+    response = client.post(url_for('user.login'), data=dict(email='test@valid.com', password='testvalid'), follow_redirects=True)
     yield client
-

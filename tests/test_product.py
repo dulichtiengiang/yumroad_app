@@ -25,7 +25,7 @@ def test__product_name__validation(client, init_database):
     with pytest.raises(ValueError):
         Product(name="   a0", description="invalid book")
 
-def test_index_page(client, init_database, sample_book):
+def test__index_get(client, init_database, sample_book):
     # client.get('/product') #blueprint('/product')
     response = client.get(url_for('products.index'))
     assert response.status_code == 200
@@ -35,8 +35,7 @@ def test_index_page(client, init_database, sample_book):
     expected_link = url_for('products.details', product_id=sample_book.id)
     assert expected_link in str(response.data)
 
-def test_detail_page(client, init_database, sample_book):
-    # client.get('/product/1')
+def test__detail_get(client, init_database, sample_book):
     response = client.get(url_for('products.details', product_id=sample_book.id))
     assert response.status_code == 200
     assert 'Yumroad' in str(response.data) 
